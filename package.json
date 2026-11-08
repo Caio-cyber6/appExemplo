@@ -1,0 +1,22 @@
+{
+  "name": "app-exemplo-devops",
+  "version": "1.1.0",
+  "description": "Aplicação Web Estática com Pipeline CI/CD Automatizada (GitHub Actions + Render) - Lab DevOps Instituto J&F",
+  "main": "index.html",
+  "scripts": {
+    "lint": "node validate-html.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "devops",
+    "ci-cd",
+    "github-actions",
+    "render",
+    "instituto-jef"
+  ],
+  "author": "Caio França",
+  "license": "MIT",
+  "devDependencies": {
+    "node-html-parser": "^6.1.13"
+  }
+}

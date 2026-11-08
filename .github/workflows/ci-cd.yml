@@ -1,0 +1,68 @@
+name: Pipeline CI/CD - appExemplo
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # =========================================================================
+  # ETAPA 1: INTEGRAÇÃO CONTÍNUA (CI)
+  # Executa em todo push e pull_request para a branch main
+  # =========================================================================
+  ci:
+    name: CI - Validação e Testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Realizar checkout do código-fonte
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar ambiente Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 3. Instalar dependências do projeto
+        run: npm ci
+
+      - name: 4. Executar verificação estrutural (Lint HTML)
+        run: npm run lint
+
+      - name: 5. Executar testes automatizados de DOM
+        run: npm test
+
+  # =========================================================================
+  # ETAPA 2: ENTREGA CONTÍNUA / DEPLOYMENT (CD)
+  # Executa somente após push na branch main E se a etapa de CI passar
+  # =========================================================================
+  cd:
+    name: CD - Deploy no Render.com
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Disparar Deploy Hook no Render.com
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "Erro: Secret RENDER_DEPLOY_HOOK_URL não configurado no GitHub!"
+            exit 1
+          fi
+          echo "Acionando deployment automático no Render..."
+          HTTP_STATUS=$(curl -s -o response.txt -w "%{http_code}" -X POST "$RENDER_DEPLOY_HOOK_URL")
+          cat response.txt
+          echo ""
+          echo "HTTP Status retornado pelo Render: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            echo "✔ Deployment iniciado com sucesso no Render!"
+          else
+            echo "❌ Falha ao acionar Deploy Hook no Render (HTTP $HTTP_STATUS)"
+            exit 1
+          fi

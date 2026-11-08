@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>appExemplo - Render Static Site</title>
+    <title>appExemplo - Pipeline CI/CD Automatizada | Instituto J&amp;F</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #001489 0%, #002AD8 55%, #0F9ED5 100%);
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -17,44 +17,63 @@
             padding: 20px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
             border-radius: 16px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.4rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
         }
         p {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: #e8ebff;
         }
         .badge {
             display: inline-block;
-            background: #48bb78;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
+            background: #00C667;
+            color: #062819;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .pipeline-info {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            font-size: 0.95rem;
+            text-align: left;
+        }
+        .pipeline-info div {
+            margin: 6px 0;
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <span class="badge">Online no Render</span>
+        <span class="badge" id="status-badge">CI/CD Ativo • Online no Render</span>
         <h1>appExemplo</h1>
-        <p>Aplicação web estática hospedada com sucesso no Render via GitHub!</p>
-        <p>Laboratório DevOps: Cloud Applications for Developers.</p>
+        <p>Aplicação web estática publicada automaticamente via <strong>GitHub Actions (CI/CD)</strong> e hospedada no <strong>Render.com</strong>.</p>
+        <p>Laboratório DevOps — Cloud for Developers &amp; Pipeline CI/CD (Instituto J&amp;F).</p>
+        <div class="pipeline-info" id="pipeline-details">
+            <div><strong>✔ Integração Contínua (CI):</strong> Checkout, Node.js Setup, Instalação de Dependências, Lint e Testes de DOM com Cheerio.</div>
+            <div><strong>✔ Entrega Contínua (CD):</strong> Deploy automatizado via Render Deploy Hook após aprovação da CI na branch <code>main</code>.</div>
+            <div><strong>✔ Versão da Entrega:</strong> <span id="app-version">v1.1.0</span></div>
+        </div>
     </div>
 </body>
 </html>
