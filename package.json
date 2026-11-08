@@ -1,0 +1,12 @@
+{
+  "name": "app-exemplo-devops",
+  "version": "1.0.0",
+  "description": "Aplicacao de exemplo para laboratorio de DevOps CI/CD - Rascunho Inicial",
+  "main": "index.html",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}
